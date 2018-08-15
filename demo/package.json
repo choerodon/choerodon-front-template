@@ -1,17 +1,31 @@
 {
-    "name": "choerodon-front-demo",
-    "version": "1.0.0",
-    "description": "",
-    "main": "src/app/demo/containers/DEMOIndex.js",
-    "scripts": {
-      "start": "choerodon-front-boot start --config ../config.js",
-      "build": "choerodon-front-boot build --config ../config.js"
-    },
-    "contributors": [
-      "choerodon"
+  "name": "choerodon-front-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app/demo/containers/DEMOIndex.js",
+  "scripts": {
+    "start": "choerodon-front-boot start --config ../config.js",
+    "build": "choerodon-front-boot build --config ../config.js",
+    "lint": "npm run lint:es && npm run lint:style",
+    "lint:es": "eslint src/**/*.{js,jsx} ../config.js",
+    "lint:style": "stylelint src/**/*.scss --syntax scss",
+    "lint-staged": "lint-staged",
+    "lint-staged:es": "eslint"
+  },
+  "contributors": [
+    "choerodon"
+  ],
+  "license": "ISC",
+  "dependencies": {
+    "choerodon-front-boot": "0.7.1"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx}": [
+      "npm run lint-staged:es"
     ],
-    "license": "ISC",
-    "dependencies": {
-      "choerodon-front-boot": "0.6.5"
-    }
-  }
+    "src/**/*.scss": "stylelint --syntax scss"
+  },
+  "pre-commit": [
+    "lint-staged"
+  ]
+}
