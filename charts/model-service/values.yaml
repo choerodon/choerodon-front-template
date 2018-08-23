@@ -34,10 +34,6 @@ env:
     PRO_COOKIE_SERVER: example.com.cn
     PRO_HTTP: http
 
-metrics:
-  path: /prometheus
-  group: nginx
-
 logs:
   parser: nginx
 

@@ -24,9 +24,9 @@ spec:
         - name: DB_PORT
           value: {{ .Values.preJob.preConfig.mysql.port | quote }}
         - name: DB_USER
-          value: {{ .Values.preJob.preConfig.mysql.username }}
+          value: {{ .Values.preJob.preConfig.mysql.username | quote }}
         - name: DB_PASS
-          value: {{ .Values.preJob.preConfig.mysql.password }}
+          value: {{ .Values.preJob.preConfig.mysql.password | quote }}
         - name: DB_NAME
           value: {{ .Values.preJob.preConfig.mysql.dbname }}
         command:
