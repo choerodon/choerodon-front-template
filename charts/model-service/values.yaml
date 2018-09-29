@@ -8,6 +8,7 @@ image:
   repository: registry.cn-hangzhou.aliyuncs.com/{{group.name}}/{{service.code}}
 
 preJob:
+  timeout: 300
   preConfig:
     mysql:
       host: localhost
