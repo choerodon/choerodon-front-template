@@ -33,8 +33,8 @@ docker_build:
     function node_module(){
         cd ${1} && npm install -registry https://nexus.choerodon.com.cn/repository/choerodon-npm/ && cd ..
         mkdir -p /cache/${CI_PROJECT_NAME}-${CI_PROJECT_ID}-${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHA}
-        python ./${1}/node_modules/choerodon-front-boot/structure/configAuto.py ${1}
-        cp -r config.yml /cache/${CI_PROJECT_NAME}-${CI_PROJECT_ID}-${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHA}/
+        python ./structure/menu/__init__.py -o yml -m ${1}
+        cp -r menu.yml /cache/${CI_PROJECT_NAME}-${CI_PROJECT_ID}-${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHA}/
         cd ${1}
     }
 
