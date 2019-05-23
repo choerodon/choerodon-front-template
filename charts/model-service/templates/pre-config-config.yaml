@@ -1,3 +1,4 @@
+{{- if .Values.preJob.preConfig.enable }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -43,3 +44,4 @@ spec:
           python ./menu/__init__.py -o sql -d {{ .Values.preJob.preConfig.db.enabledelete }};
           '
       restartPolicy: Never
+{{- end }}

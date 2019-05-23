@@ -21,6 +21,7 @@ preJob:
       upattrs: sort
 
 service:
+  name: {{service.code}}
   enable: false
   type: ClusterIP
   port: 80
