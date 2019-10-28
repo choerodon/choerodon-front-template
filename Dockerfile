@@ -11,7 +11,6 @@ ENV PRO_HTTP http
 RUN echo "Asia/shanghai" > /etc/timezone;
 ADD dist /usr/share/nginx/html
 COPY structure/enterpoint.sh /usr/share/nginx/html
-COPY menu.yml /usr/share/nginx/html/menu.yml
 COPY structure/menu /usr/share/nginx/html/menu
 RUN chmod 777 /usr/share/nginx/html/enterpoint.sh
 ENTRYPOINT ["/usr/share/nginx/html/enterpoint.sh"]
