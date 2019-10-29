@@ -1,26 +1,24 @@
-image: registry.cn-hangzhou.aliyuncs.com/choerodon-tools/cifront:0.7.0
+image: registry.cn-hangzhou.aliyuncs.com/choerodon-tools/cibase:0.8.1
 
 stages:
-  - node_build
-  - docker_build
+  - build
+  - release
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
 
-node_build:
-  stage: node_build
+build:
+  stage: build
   script:
     - node_module demo
     - node_build build
-    - cp -r dist /cache/${CI_PROJECT_NAME}-${CI_PROJECT_ID}-${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHA}/dist
-    - cp -r node_modules/choerodon-front-boot/structure /cache/${CI_PROJECT_NAME}-${CI_PROJECT_ID}-${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHA}/structure
-
-docker_build:
-  image: registry.cn-hangzhou.aliyuncs.com/choerodon-tools/cibase:0.7.0
-  stage: docker_build
-  script:
+    - mv node_modules/choerodon-front-boot/structure ./structure
+    - mv ../Dockerfile  .
     - docker_build
-    - rm -rf /cache/${CI_PROJECT_NAME}-${CI_PROJECT_ID}-${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHA}
+
+release:
+  stage: release
+  script:
     - chart_build
 
 .auto_devops: &auto_devops |
@@ -32,12 +30,10 @@ docker_build:
     source .auto_devops.sh
     function node_module(){
         cd ${1} && npm install --registry https://nexus.choerodon.com.cn/repository/choerodon-npm/ --sass-binary-site=http://npm.taobao.org/mirrors/node-sass && cd ..
-        mkdir -p /cache/${CI_PROJECT_NAME}-${CI_PROJECT_ID}-${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHA}
         python ./${1}/node_modules/choerodon-front-boot/structure/menu/__init__.py -o yml -m ${1}
-        cp -r menu.yml /cache/${CI_PROJECT_NAME}-${CI_PROJECT_ID}-${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHA}/
         cd ${1}
     }
-c
+    
     function node_build(){
         chmod -R 777 node_modules
         npm run ${1:-"build"}
@@ -45,7 +41,6 @@ c
     }
 
     function docker_build(){
-        cp -r /cache/${CI_PROJECT_NAME}-${CI_PROJECT_ID}-${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHA}/* ${1:-"."}
         docker login -u ${DOCKER_USER} -p ${DOCKER_PWD} ${DOCKER_REGISTRY}
         docker build -t ${DOCKER_REGISTRY}/${GROUP_NAME}/${PROJECT_NAME}:${CI_COMMIT_TAG} ${1:-"."}
         docker push ${DOCKER_REGISTRY}/${GROUP_NAME}/${PROJECT_NAME}:${CI_COMMIT_TAG}
