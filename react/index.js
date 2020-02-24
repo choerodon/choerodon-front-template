@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { inject } from 'mobx-react';
-import { asyncLocaleProvider, asyncRouter, nomatch } from 'choerodon-front-boot';
-const HelloIndex = asyncRouter(() => import('./organization/hello'));
+import { asyncLocaleProvider, asyncRouter, nomatch } from '@choerodon/boot';
+const HelloIndex = asyncRouter(() => import('./routes/organization/hello'));
 
 @inject('AppState')
 class DEMOIndex extends React.Component {
