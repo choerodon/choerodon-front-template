@@ -1,34 +1,41 @@
 {
-  "name": "choerodon-front-demo",
-  "version": "1.0.0",
-  "routeName": "demo",
-  "description": "",
-  "main": "./lib/index.js",
-  "scripts": {
-    "start": "choerodon-front-boot start --config ./react/config.js",
-    "dist": "choerodon-front-boot build --config ./react/config.js",
-    "lint": "npm run lint:es && npm run lint:style",
-    "lint:es": "eslint src/**/*.{js,jsx} ./react/config.js",
-    "lint:style": "stylelint src/**/*.scss --syntax scss",
-    "lint-staged": "lint-staged",
-    "lint-staged:es": "eslint"
-  },
-  "contributors": [
-    "choerodon"
-  ],
-  "license": "ISC",
+  "name": "choerodon-front-template",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "@choerodon/boot": "0.19.2",
-    "@choerodon/master": "0.20.0",
-    "rxjs-compat": "^6.5.3"
+    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.5.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "5.0.0",
+    "web-vitals": "^2.1.4"
   },
-  "lint-staged": {
-    "src/**/*.{js,jsx}": [
-      "npm run lint-staged:es"
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "mocha",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
     ],
-    "src/**/*.scss": "stylelint --syntax scss"
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
-  "pre-commit": [
-    "lint-staged"
-  ]
+  "devDependencies": {
+    "mocha": "^9.1.4"
+  }
 }
